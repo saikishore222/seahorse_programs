@@ -22,13 +22,6 @@ class TodoAccount(Account):
   marked:bool
 
 @instruction
-def init_tasks(owner:Signer,tasks:Empty[Tasks]):
-  tasks=tasks.init(
-    payer=owner,
-    seeds=['tasks-account',owner]
-  )
-
-@instruction
 def init_userprofile(owner:Signer,userprofile:Empty[UserProfile]):
   userprofile=userprofile.init(
     payer=owner,
@@ -36,16 +29,13 @@ def init_userprofile(owner:Signer,userprofile:Empty[UserProfile]):
   userprofile.owner=owner.key()
   userprofile.last_todo=0
   userprofile.todo_count=0
-
-@instruction
-def init_todoaccount(owner:Signer,todoaccount:Empty[TodoAccount],num:u64):
-  todoaccount=todoaccount.init(
-    payer=owner,
-    seeds=['todoaccount',owner]
-  )
   
 @instruction
-def add_task(owner:Signer,userprofile:UserProfile,todoaccount:TodoAccount,task:Tasks,content:str):
+def add_task(owner:Signer,userprofile:UserProfile,todoaccount:Empty[TodoAccount],content:str):
+  todoaccount=todoaccount.init(
+    payer=owner,
+    seeds=['todoaccount',owner,userprofile.last_todo]
+  )
   todoaccount.content=content
   todoaccount.idx=userprofile.last_todo
   todoaccount.owner=owner.key()
@@ -53,8 +43,14 @@ def add_task(owner:Signer,userprofile:UserProfile,todoaccount:TodoAccount,task:T
   userprofile.todo_count+=1
 
 @instruction
-def mark_task(owner:Signer,userprofile:UserProfile,todoaccount:TodoAccount):
+def mark_task(owner:Signer,todoIndex:u8,userprofile:UserProfile,todoaccount:TodoAccount):
   todoaccount.marked=True
-  userprofile.todo_count-=1
-  todoaccount.idx=userprofile.last_todo
+  print(todoaccount.marked)
+
+
+
+
+
+  
+  
 
