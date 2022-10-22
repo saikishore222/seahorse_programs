@@ -1,4 +1,4 @@
-Todo Solana Smart Contract using Seahorse
+# Todo Solana Smart Contract using Seahorse
 
 In this Contract You can do
 
@@ -6,7 +6,7 @@ In this Contract You can do
 
 --->you can mark the task as done.
 
-Build
+# Build
 
 ![image](https://user-images.githubusercontent.com/55663050/197323806-bc673a6c-4bf7-4550-96be-be342f57c471.png)
 
